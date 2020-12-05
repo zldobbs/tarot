@@ -21,9 +21,9 @@ export default class Tarot extends Component {
 
   handleDeckClick() {
     let { cards } = this.state; 
-    let card = Math.floor(Math.random() * (78 - 0 + 1)) + 0;
+    let card = Math.floor(Math.random() * (77 - 0 + 1)) + 0;
     while (this.state.cards.indexOf(card) >= 0) {
-      card = Math.floor(Math.random() * (78 - 0 + 1)) + 0;
+      card = Math.floor(Math.random() * (77 - 0 + 1)) + 0;
     }
     cards.push(card);
     this.setState({ cards: cards });

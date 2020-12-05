@@ -21,7 +21,7 @@ export default class Board extends Component {
     });
 
     return(
-      <div className="board">
+      <div className="board shadow">
         {card_render}
       </div>
     );

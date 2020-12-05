@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react'; 
 import Draggable from 'react-draggable'; 
+import ReactCardFlip from 'react-card-flip';
 
 export default class Card extends Component {
   constructor(props) { 
@@ -13,19 +14,28 @@ export default class Card extends Component {
 
     this.state = {
       dragging: false,
-      shown: false,
-      flipped: false
+      isFlipped: false,
+      orientation: false,
+      controlledPosition: {
+        x: 0,
+        y: 0
+      }
     };
 
     this.handleDragStart = this.handleDragStart.bind(this);
     this.handleDragStop = this.handleDragStop.bind(this);
   }
 
-  handleDragStart() {
-    this.setState({ dragging: true });
+  handleDragStart = (e, ui) => {
+    const {x, y} = ui;
+    this.setState({
+      controlledPosition: {x, y},
+      dragging: true
+    });
+    console.log(this.state.x + ", " + this.state.y);
   }
 
-  handleDragStop() {
+  handleDragStop = (e, ui) => {
     const {dragging} = this.state
     this.setState({dragging: false})
     if (!dragging) {
@@ -34,28 +44,42 @@ export default class Card extends Component {
   }
 
   handleCardClick() {
-    if (!this.state.shown) {
-      let flipped = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-      let rotate = flipped === 0 ? false : true; 
+    if (!this.state.isFlipped) {
+      let orientation = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+      let rotate = orientation === 0 ? false : true; 
       this.setState({ 
-        shown: true,
-        flipped: rotate
+        isFlipped: true,
+        orientation: rotate
       });
     }
   }
 
   render() {
-    let flipped = this.state.flipped === true ? 'rotate-img' : '';
+    let orientation = this.state.orientation === true ? 'rotate-img' : '';
+    let {controlledPosition} = this.state
     return(
-      <Draggable bounds="parent" onDrag={this.handleDragStart} onStop={this.handleDragStop}>
-        <div className="wrapper">
-          <img  className={`card ${flipped}`} 
-                draggable="false" 
-                src={`/img/tarot-cards/${this.state.shown ? this.props.value : "back"}.png`} 
-                alt="card">
-          </img>
-        </div>
-      </Draggable>
+      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="vertical" flipSpeedBackToFront={1.0}>
+        <Draggable bounds=".board" onDrag={this.handleDragStart} onStop={this.handleDragStop} poistion={controlledPosition}>
+          <div className="card-wrapper card-start shadow">
+            <img  className={`card ${orientation}`} 
+                  draggable="false" 
+                  src={`/img/tarot-cards/back.png`} 
+                  alt="card">
+            </img>
+          </div>
+        </Draggable>
+
+        <Draggable bounds=".board" onDrag={this.handleDragStart} onStop={this.handleDragStop} position={controlledPosition}>
+          <div className="card-wrapper shadow">
+            <img  className={`card ${orientation}`} 
+                  draggable="false" 
+                  src={`/img/tarot-cards/${this.props.value}.png`} 
+                  alt="card">
+            </img>
+          </div>
+        </Draggable>
+      </ReactCardFlip>
+
     );
   }
 

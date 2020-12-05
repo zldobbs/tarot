@@ -26,8 +26,7 @@
   position: absolute; 
   top: 10vh; 
   left: 10vw; 
-  background-color: #F3F3F3;
-  box-shadow: 3px 3px 5px #000000;
+  background-color: #3C3C3C;
   border-radius: 1.5%;
   padding: 5px; 
   overflow: hidden;
@@ -39,22 +38,22 @@
   min-height: 100%;
   max-width: 100%;
   max-height: 100%;
-  /* Shadow, hover */
+}
+
+.card-start {
+  top: 20; 
 }
 
 .deck-wrapper {
   display: inline-block;
-  box-shadow: 3px 3px 5px #000000;
   width: 66.6px; 
   height: 105.3px; 
   margin: 0 auto; 
 }
 
-.wrapper {
+.card-wrapper {
+  position: absolute;
   display: inline-block;
-  box-shadow: 3px 3px 5px #000000;
-  max-width: 121.2px; 
-  max-height: 190.6px; 
 }
 
 .rotate-img {
@@ -67,8 +66,7 @@
   position: absolute;
   top: 75vh;
   left: 30vw; 
-  box-shadow: 3px 3px 5px #000000;
-  background-color: #3C3C3C;
+  background-color: #F3F3F3;;
   border-radius: 1.5%;
   padding: 5px; 
   overflow: hidden; 
@@ -83,4 +81,26 @@
   color: #f3f3f3;
   background-color: #581E7E;
   border-radius: 2.5%;
+  border: none;
+  margin: 5px auto;
+}
+
+.shadow {
+  box-shadow: 3px 3px 5px #000000;
+}
+
+/* Desktop rules */
+@media only screen and (min-width: 768px) {
+  .card-wrapper {
+    max-width: 121.2px; 
+    max-height: 190.6px; 
+  }
+}
+
+/* Phone rules */
+@media only screen and (max-width: 767px) {
+  .card-wrapper {
+    max-width: 90.9px; 
+    max-height: 142.95px; 
+  }
 }
